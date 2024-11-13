@@ -4,12 +4,8 @@ const { getYoutubeVideoID, getThumbnailUrl, getVideoTitle } = require('./utils/g
 
 exports.scrapeBlog = async (url) => {
     try {
-        // console.log(url);
         const { data } = await axios.get(url);
-
         const $ = cheerio.load(data);
-
-        console.log($.html())
 
         const title = $('head > title').text() || $('h1').first().text();
 
@@ -22,15 +18,12 @@ exports.scrapeBlog = async (url) => {
         } else {
             content = $('p').map((i, el) => $(el).text()).get().join('\n');
         }
-        const imageContainer = $('div .lh picture source');
-        // console.log({ imageContainer })
-        console.log(imageContainer.length)
+        const imageContainer = $('img');
+
         const images = [];
 
         imageContainer.each((i, img) => {
-            console.log(i, img)
-            const src = img.attr('src');
-            console.log(src);
+            const src = $(img).attr('srcset');
             if (src && !images.includes(src)) {
                 images.push(src);
             }

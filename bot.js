@@ -13,7 +13,7 @@ bot.onText(/\/extract (.+)/, async (msg, match) => {
     try {
         const url = match[1];
 
-        bot.sendMessage(chatId, 'extracting data, please wait...');
+        // bot.sendMessage(chatId, 'extracting data, please wait...');
 
         const data = await getYoutubeDetails(url);
 
