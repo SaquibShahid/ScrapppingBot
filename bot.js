@@ -3,7 +3,12 @@ require('dotenv').config();
 const { scrapeBlog, getYoutubeDetails } = require('./index.js');
 const { isValidImageUrl } = require('./utils/general.util.js');
 const { summarizeBlog } = require('./modules/gemini.js');
+const express = require('express');
+const app = express();
 
+app.get('/', (req, res) => {
+    return res.send("welcome");
+})
 
 const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
@@ -75,3 +80,8 @@ bot.onText(/\/scrape (.+)/, async (msg, match) => {
         bot.sendMessage(chatId, 'Failed to scrape the URL. Please check the URL and try again.');
     }
 });
+
+
+app.listen(4000, () => {
+    console.log("Server listening on port " + 4000)
+})
